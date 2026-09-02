@@ -1,0 +1,6 @@
+{
+  "name": "منظومة نوب الموحدة | NOUB Master Ecosystem",
+  "description": "المنظومة الموحدة المتكاملة: منصة نوب سبورتس الرياضية، نوب إندستري وورش الفراعنة ومقايضة الكروت، ومحمية الأنساب والوراثة البيولوجية 89x بحساب واقتصاد موحد.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

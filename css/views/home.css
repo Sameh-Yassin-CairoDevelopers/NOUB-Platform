@@ -1,0 +1,392 @@
+/*
+ * Project: NOUB SPORTS ECOSYSTEM
+ * Filename: css/views/home.css
+ * Version: Noub Sports_beta 3.0.0 (ROYAL TRANSPARENCY MASTER)
+ * Status: Production Ready
+ */
+
+#view-home {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - var(--header-height) - var(--nav-height));
+    background: transparent !important;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-bottom: 120px;
+}
+
+.home-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; 
+}
+
+.home-tabs { 
+    display: flex; 
+    gap: 30px; 
+    width: 90%;
+    max-width: 360px;
+    justify-content: center;
+    margin-bottom: 10px; 
+    padding-bottom: 8px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    z-index: 10;
+}
+
+.htab { 
+    background: none; 
+    border: none; 
+    color: var(--text-muted);
+    font-family: var(--font-primary); 
+    font-weight: bold; 
+    cursor: pointer; 
+    font-size: 0.95rem; 
+    position: relative; 
+    padding-bottom: 6px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.htab.active { 
+    color: var(--gold-main); 
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.htab.active::after {
+    content: ''; 
+    position: absolute; 
+    bottom: -9px; 
+    left: 0; 
+    width: 100%; 
+    height: 3px; 
+    background: var(--gold-main);
+    box-shadow: 0 0 10px var(--gold-main);
+    border-radius: 2px;
+}
+
+#home-dynamic-content { 
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    perspective: 1200px; 
+}
+
+/* --- 3D CARD WRAPPER & FLIPPER --- */
+.card-3d-wrapper {
+    width: 290px;
+    height: 440px;
+    perspective: 1200px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.card-flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    border-radius: 24px;
+}
+
+.card-3d-wrapper.flipped .card-flipper {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 24px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.2);
+    overflow: hidden;
+}
+
+.card-front {
+    background: radial-gradient(circle at 50% 25%, #252836 0%, #0d0e12 85%);
+    border: 2px solid var(--gold-main);
+}
+
+.card-front.rarity-diamond {
+    border: 2px solid #b9f2ff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(185, 242, 255, 0.3);
+}
+
+.card-glass-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.15) 0%,
+        rgba(255,255,255,0.03) 40%,
+        transparent 60%
+    );
+    pointer-events: none;
+    transform: rotate(25deg);
+}
+
+.card-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 2;
+}
+
+.rating-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-rating {
+    font-family: var(--font-orbitron);
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.card-pos {
+    font-family: var(--font-orbitron);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gold-main);
+    margin-top: 2px;
+}
+
+.badge-flag {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--gold-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--gold-main);
+    font-size: 1.1rem;
+}
+
+.card-avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160px;
+    margin: 5px 0;
+    z-index: 2;
+}
+
+.card-name-plate {
+    text-align: center;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 6px 12px;
+}
+
+.card-name-plate h2 {
+    font-family: var(--font-sport);
+    font-size: 1.4rem;
+    color: var(--gold-main);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.card-name-plate .sub-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.card-stats-dock {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 14px;
+    padding: 8px 10px;
+    z-index: 2;
+}
+
+.stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-pill .lbl {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.stat-pill .val {
+    font-family: var(--font-orbitron);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* CARD BACK - PASSPORT */
+.card-back {
+    background: radial-gradient(circle at 50% 30%, #1e2028 0%, #08090b 100%);
+    border: 2px solid var(--gold-main);
+    transform: rotateY(180deg);
+}
+
+.passport-header {
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.passport-header i {
+    font-size: 2rem;
+    color: var(--gold-main);
+    margin-bottom: 6px;
+}
+
+.passport-header h3 {
+    font-family: var(--font-sport);
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.passport-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.pass-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 6px;
+}
+
+.gold-code {
+    color: var(--gold-main);
+    font-family: var(--font-orbitron);
+}
+
+.qr-mock {
+    text-align: center;
+    margin-top: 10px;
+    padding: 12px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 12px;
+    border: 1px dashed rgba(212,175,55,0.3);
+}
+
+.qr-mock i {
+    font-size: 2.5rem;
+    color: #fff;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.qr-mock small {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+}
+
+/* ROYAL BUTTONS */
+.home-actions {
+    display: flex;
+    gap: 12px;
+    width: 90%;
+    max-width: 320px;
+    justify-content: center;
+    margin-top: 10px;
+    z-index: 10;
+}
+
+.btn-royal {
+    flex: 1;
+    padding: 12px 18px;
+    border-radius: 14px;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-royal-gold {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-main) 60%, var(--gold-dim) 100%);
+    color: #111;
+    border: none;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+.btn-royal-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+}
+
+.btn-royal-gold:active {
+    transform: scale(0.97);
+}
+
+.btn-royal-dark {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+.btn-royal-dark:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--gold-main);
+    color: var(--gold-main);
+}
+
+.btn-royal-dark:active {
+    transform: scale(0.97);
+}
+
+.fade-in { 
+    animation: fadeInScale 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); 
+}
+
+@keyframes fadeInScale { 
+    from { 
+        opacity: 0; 
+        transform: scale(0.95); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    } 
+}
+

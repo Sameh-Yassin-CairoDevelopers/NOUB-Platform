@@ -1,0 +1,562 @@
+/*
+ * Project: NOUB MASTER ECOSYSTEM
+ * Filename: css/views/sports.css
+ * Version: 3.0.0 (SPORTS PLATFORM STYLING)
+ */
+
+.sports-view-wrapper {
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+}
+
+.view-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.btn-back-hub {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.btn-back-hub:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.view-header-bar h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+/* SUB NAVIGATION TABS */
+.sub-nav-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sub-tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sub-tab-btn:hover {
+    color: #fff;
+}
+
+.sub-tab-btn.active {
+    background: var(--gold-main);
+    color: #000;
+    font-weight: 800;
+}
+
+/* TAB 1: 3D FUT CARD */
+.card-showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 640px) {
+    .card-showcase-grid {
+        grid-template-columns: 320px 1fr;
+    }
+}
+
+.player-card-3d-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.fut-card {
+    width: 290px;
+    height: 420px;
+    border-radius: 18px;
+    position: relative;
+    padding: 14px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+    overflow: hidden;
+}
+
+.fut-card.gold-edition {
+    background: linear-gradient(145deg, #e5c058 0%, #a67c1e 40%, #593f06 70%, #d4af37 100%);
+    border: 2px solid #fff2a8;
+}
+
+.fut-card .card-inner {
+    background: rgba(15, 16, 20, 0.85);
+    border-radius: 12px;
+    height: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.card-header-stats {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.card-header-stats .overall-val {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--gold-light);
+    font-family: var(--font-orbitron), sans-serif;
+    line-height: 1;
+}
+
+.card-header-stats .pos-val {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 2px;
+}
+
+.card-header-stats .zone-icon {
+    font-size: 14px;
+    color: var(--gold-main);
+    margin-top: 4px;
+}
+
+.card-avatar-art {
+    width: 140px;
+    height: 140px;
+    margin: 10px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-player-title {
+    text-align: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 4px 0;
+    margin: 4px 0;
+}
+
+.card-player-title h3 {
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    margin: 0;
+}
+
+.card-attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+
+.stat-cell {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 2px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-cell span {
+    font-size: 10px;
+    color: var(--gold-light);
+    font-weight: 700;
+}
+
+.stat-cell strong {
+    font-size: 14px;
+    color: #fff;
+}
+
+.card-footer-edition {
+    text-align: center;
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+/* CAREER PANEL */
+.card-career-panel {
+    background: #1a1c24;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+}
+
+.card-career-panel h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 14px 0;
+}
+
+.stats-summary-boxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.stat-box .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.stat-box .val {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+}
+
+/* MATCHES & ARENA */
+.arena-top-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.matches-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.match-card {
+    background: #1a1c24;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+}
+
+.match-time-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+}
+
+.match-teams-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.team-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.team-logo {
+    font-size: 24px;
+    color: var(--gold-main);
+}
+
+.vs-circle {
+    background: #2a2d3a;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--text-muted);
+}
+
+.match-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 10px;
+}
+
+/* EMERGENCY SOS */
+.emergency-header-banner {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(15, 16, 20, 0.9));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.emergency-header-banner h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 4px 0;
+}
+
+.emergency-header-banner p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.btn-emergency-broadcast {
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.emergencies-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 640px) {
+    .emergencies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.emergency-ticket {
+    background: #1a1c24;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    position: relative;
+}
+
+.ticket-badge {
+    font-size: 11px;
+    font-weight: 800;
+    color: #ef4444;
+    margin-bottom: 6px;
+}
+
+.emergency-ticket h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 8px 0;
+}
+
+.ticket-info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 4px 0;
+}
+
+.btn-accept-emergency {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10b981;
+    color: #34d399;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 800;
+    width: 100%;
+    margin-top: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-accept-emergency:hover {
+    background: #10b981;
+    color: #000;
+}
+
+/* TACTICS BOARD */
+.tactics-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.tactics-pitch-container {
+    width: 100%;
+    height: 480px;
+    background: #1e3a1e;
+    background-image: repeating-linear-gradient(0deg, #1b351b 0px, #1b351b 40px, #203f20 40px, #203f20 80px);
+    border: 3px solid #fff;
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.pitch-lines .pitch-center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+}
+
+.pitch-lines .pitch-center-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.pitch-penalty-area.top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-top: none;
+}
+
+.pitch-penalty-area.bottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-bottom: none;
+}
+
+.pitch-player-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: grab;
+    z-index: 10;
+}
+
+.player-icon-token {
+    width: 38px;
+    height: 38px;
+    background: var(--gold-main);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    border: 2px solid #fff;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.player-label-tag {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 2px;
+    white-space: nowrap;
+}
+
+/* TOURNAMENTS */
+.tournament-hero-banner {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(15, 16, 20, 0.95));
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.tourn-badge {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+}
+
+.noub-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.noub-table th, .noub-table td {
+    padding: 10px 12px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 13px;
+}
+
+.noub-table th {
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.noub-table td {
+    color: #fff;
+}

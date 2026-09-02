@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>منظومة نوب الموحدة | NOUB Platform</title>
+    <meta name="description" content="منظومة نوب المتكاملة: نوب سبورتس الرياضية والمباريات، ورش الفراعنة والتصنيع ومقايضة الكروت، ومحمية الأنساب والوراثة 89x بحساب واقتصاد موحد." />
+    <meta property="og:title" content="منظومة نوب الموحدة | NOUB Platform" />
+    <meta property="og:description" content="منظومة نوب المتكاملة: نوب سبورتس الرياضية والمباريات، ورش الفراعنة والتصنيع ومقايضة الكروت، ومحمية الأنساب والوراثة 89x بحساب واقتصاد موحد." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts & Font Awesome 6 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Changa:wght@500;600;700;800&family=Cinzel:wght@600;700;800&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Application Stylesheets -->
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <!-- Supabase JS & Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <!-- 1. SPLASH SCREEN -->
+    <div id="screen-splash">
+      <div class="brand-logo" style="text-align: center;">
+        <h1 style="color: var(--gold-main); font-family: 'Orbitron', 'Changa', 'Cairo', sans-serif;">NOUB</h1>
+        <span>UNIFIED ECOSYSTEM</span>
+        <div class="loading-text"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل المنظومة الموحدة...</div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN APP CONTAINER -->
+    <div id="app-container">
+      <!-- GLOBAL HEADER -->
+      <header id="global-header" class="app-header hidden">
+        <!-- USER PROFILE & GOLD CAPSULE -->
+        <div class="profile-summary" id="header-profile-trigger" title="فتح الملف الشخصي والخزنة">
+          <div class="avatar-circle">
+            <i class="fa-solid fa-user-shield text-gold"></i>
+          </div>
+          <div class="user-texts">
+            <h3 id="header-user-name">كابتن نوب</h3>
+            <div class="header-gold-pill">
+              <i class="fa-solid fa-coins text-gold"></i>
+              <span id="header-gold-val">10,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CURRENT WORLD BADGE -->
+        <div class="world-badge-indicator" id="header-world-badge">
+          <i class="fa-solid fa-house"></i>
+          <span id="header-world-title">الرئيسية الموحدة</span>
+        </div>
+
+        <!-- WORLD DRAWER SWITCHER BUTTON -->
+        <div class="header-controls">
+          <button class="btn-world-switcher" id="menu-toggle-btn" title="تبديل العالم / القائمة الرئيسية" aria-label="تبديل العالم">
+            <i class="fa-solid fa-compass"></i>
+            <span class="switcher-label">العوالم</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- SIDE MENU DRAWER OVERLAY -->
+      <div id="main-menu-overlay" class="menu-overlay">
+        <div class="side-menu-drawer">
+          <div class="menu-header">
+            <h2 style="color: var(--gold-main);"><i class="fa-solid fa-layer-group"></i> عوالم نوب الموحدة</h2>
+            <button class="icon-btn-ghost" id="close-menu-btn" title="إغلاق القائمة" aria-label="إغلاق القائمة"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="menu-list">
+            <button class="menu-item highlight" id="menu-hub-btn">
+              <i class="fa-solid fa-house"></i>
+              <span>البوابة الرئيسية (Master Hub)</span>
+            </button>
+            <button class="menu-item" id="menu-sports-btn">
+              <i class="fa-solid fa-futbol"></i>
+              <span>منصة نوب سبورتس (Sports)</span>
+            </button>
+            <button class="menu-item" id="menu-industry-btn">
+              <i class="fa-solid fa-landmark"></i>
+              <span>ورش وصروح الفراعنة (Industry)</span>
+            </button>
+            <button class="menu-item" id="menu-sanctuary-btn">
+              <i class="fa-solid fa-paw"></i>
+              <span>محمية الأنساب والوراثة (89x)</span>
+            </button>
+            <button class="menu-item" id="menu-profile-btn">
+              <i class="fa-solid fa-user-shield"></i>
+              <span>حسابي والخزنة المركزية (Profile)</span>
+            </button>
+            <hr class="menu-divider">
+            <button class="menu-item" id="menu-logout-btn" style="color: var(--danger);">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span>تسجيل الخروج</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN VIEWS CONTENT HOST -->
+      <main id="main-content">
+        <section id="view-onboarding" class="view-section"></section>
+        <section id="view-hub" class="view-section hidden"></section>
+        <section id="view-sports" class="view-section hidden"></section>
+        <section id="view-industry" class="view-section hidden"></section>
+        <section id="view-sanctuary" class="view-section hidden"></section>
+        <section id="view-profile" class="view-section hidden"></section>
+      </main>
+
+      <!-- DYNAMIC BOTTOM NAVBAR -->
+      <nav id="global-navbar" class="hidden"></nav>
+
+      <!-- TOAST NOTIFICATIONS HOST -->
+      <div id="toast-container"></div>
+    </div>
+
+    <!-- MAIN APP BOOTSTRAPPER -->
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

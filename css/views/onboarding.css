@@ -1,0 +1,220 @@
+/*
+ * Project: NOUB MASTER ECOSYSTEM
+ * Filename: css/views/onboarding.css
+ * Version: 3.0.0 (ONBOARDING & STARTER GRANT STYLING)
+ */
+
+.onboarding-wrapper {
+    min-height: 100vh;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.onboarding-hero {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.brand-badge {
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--gold-main);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.onboarding-hero h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 8px 0;
+}
+
+.onboarding-hero p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.onboarding-card {
+    background: #1a1c24;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    width: 100%;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.onb-step h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.noub-input, .noub-select {
+    width: 100%;
+    background: #0f1014;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.noub-input:focus, .noub-select:focus {
+    border-color: var(--gold-main);
+    outline: none;
+}
+
+.position-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.pos-pill {
+    background: #0f1014;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 8px 4px;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pos-pill strong {
+    font-size: 13px;
+    color: var(--gold-light);
+}
+
+.pos-pill span {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.pos-pill.selected {
+    background: var(--gold-main);
+    border-color: var(--gold-light);
+}
+
+.pos-pill.selected strong, .pos-pill.selected span {
+    color: #000;
+    font-weight: 800;
+}
+
+/* AVATAR PREVIEW */
+.avatar-preview-box {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 16px auto;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--gold-main);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.customizer-controls label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.color-palette {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.color-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-dot.selected {
+    border-color: #fff;
+    transform: scale(1.15);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.flex-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-noub-gold {
+    background: var(--gold-main);
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s ease;
+}
+
+.btn-noub-gold:hover {
+    background: var(--gold-light);
+}
+
+.btn-noub-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.w-full { width: 100%; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.flex-1 { flex: 1; }

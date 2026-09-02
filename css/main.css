@@ -1,0 +1,35 @@
+/*
+ * Project: NOUB MASTER ECOSYSTEM
+ * Filename: css/main.css
+ * Version: 3.0.0 (MASTER STYLESHEET AGGREGATOR)
+ * Description: Unified stylesheet aggregator importing base variables, layout rules,
+ *              components, and multi-realm view stylesheets.
+ */
+
+/* 1. Base Layer */
+@import url('base/variables.css');
+@import url('base/reset.css');
+@import url('base/typography.css');
+
+/* 2. Layout Layer */
+@import url('layout/header.css');
+@import url('layout/navbar.css');
+@import url('layout/grid.css');
+
+/* 3. Components Layer */
+@import url('components/buttons.css');
+@import url('components/inputs.css');
+@import url('components/cards.css');
+@import url('components/modals.css');
+@import url('components/loaders.css');
+@import url('components/toasts.css');
+
+/* 4. Multi-Realm Master Views */
+@import url('views/splash.css');
+@import url('views/onboarding.css');
+@import url('views/hub.css');
+@import url('views/sports.css');
+@import url('views/industry.css');
+@import url('views/sanctuary.css');
+@import url('views/profile.css');
+@import url('views/tactics.css');

@@ -1,0 +1,370 @@
+/*
+ * Project: NOUB MASTER ECOSYSTEM
+ * Filename: css/views/hub.css
+ * Version: 3.0.0 (MASTER UNIFIED HUB STYLING)
+ */
+
+.hub-container {
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+}
+
+/* MASTER HUD BANNER */
+.master-hud-banner {
+    background: linear-gradient(135deg, rgba(26, 28, 35, 0.95), rgba(15, 16, 20, 0.98));
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+    margin-bottom: 16px;
+}
+
+.hud-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-welcome .greeting-tag {
+    font-size: 11px;
+    color: var(--gold-light);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.user-welcome h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.gold-treasury-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+}
+
+.gold-coin-icon {
+    font-size: 24px;
+    color: var(--gold-light);
+    animation: pulseGlow 2.5s infinite;
+}
+
+.gold-info .gold-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+}
+
+.gold-info .gold-val {
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff;
+    font-family: var(--font-orbitron), var(--font-cairo);
+}
+
+/* LEVEL & XP PROGRESS */
+.level-progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+}
+
+.level-badge {
+    background: var(--gold-main);
+    color: #000;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+}
+
+.xp-bar-container {
+    flex: 1;
+    height: 16px;
+    background: #222;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.xp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+.xp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 3px #000;
+}
+
+/* FAST ACTION STRIP */
+.hub-quick-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.quick-action-pill {
+    background: #1e2029;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-action-pill:hover {
+    background: #2a2d3a;
+    border-color: var(--gold-main);
+}
+
+.quick-action-pill.highlight {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+}
+
+.quick-action-pill.emergency {
+    border-color: rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+}
+
+/* REALMS GRID */
+.realms-heading {
+    margin-bottom: 14px;
+}
+
+.realms-heading h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 2px 0;
+}
+
+.realms-heading p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.realms-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 640px) {
+    .realms-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.realm-card {
+    background: #1a1c24;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.realm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+.realm-card.realm-sports:hover {
+    border-color: #3b82f6;
+}
+
+.realm-card.realm-industry:hover {
+    border-color: var(--gold-main);
+}
+
+.realm-card.realm-sanctuary:hover {
+    border-color: #10b981;
+}
+
+.realm-icon-top {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.realm-sports .realm-icon-top { color: #3b82f6; }
+.realm-industry .realm-icon-top { color: var(--gold-light); }
+.realm-sanctuary .realm-icon-top { color: #10b981; }
+
+.realm-badge {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.realm-badge.sports { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.realm-badge.industry { background: rgba(212, 175, 55, 0.2); color: var(--gold-light); }
+.realm-badge.sanctuary { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+.realm-content h4 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 6px 0;
+}
+
+.realm-content p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+}
+
+.realm-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 12px;
+}
+
+/* LIVE ACTIVITY FEED */
+.hub-activity-card {
+    background: #161820;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-top: 24px;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.card-header-flex h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.pulse-dot {
+    font-size: 11px;
+    font-weight: 700;
+    color: #10b981;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pulse-dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+.activity-feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+}
+
+.act-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.act-icon.gold { background: rgba(212, 175, 55, 0.2); color: var(--gold-light); }
+.act-icon.alert { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.act-icon.success { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+
+.act-details strong {
+    font-size: 13px;
+    color: #fff;
+    display: block;
+}
+
+.act-details p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 2px 0;
+}
+
+.act-details time {
+    font-size: 10px;
+    color: #666;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--gold-light)); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 8px var(--gold-light)); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
+}
