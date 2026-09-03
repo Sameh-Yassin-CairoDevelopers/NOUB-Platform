@@ -15,7 +15,14 @@ import { SoundManager } from '../utils/soundManager.js';
 // Master Controllers
 import { OnboardingController } from '../controllers/onboardingCtrl.js';
 import { HubController } from '../controllers/hubCtrl.js';
+import { HomeController } from '../controllers/homeCtrl.js';
 import { SportsController } from '../controllers/sportsCtrl.js';
+import { ArenaController } from '../controllers/arenaCtrl.js';
+import { TournamentController } from '../controllers/tournamentCtrl.js';
+import { TacticsController } from '../controllers/tacticsCtrl.js';
+import { TeamController } from '../controllers/teamCtrl.js';
+import { ScoutController } from '../controllers/scoutCtrl.js';
+import { OperationsController } from '../controllers/operationsCtrl.js';
 import { IndustryController } from '../controllers/industryCtrl.js';
 import { SanctuaryController } from '../controllers/sanctuaryCtrl.js';
 import { ProfileController } from '../controllers/profileCtrl.js';
@@ -28,24 +35,61 @@ export class NoubSportsApp {
         this.auth = new AuthService();
     }
 
+    init() {
+        return this.boot();
+    }
+
     async boot() {
-        console.log("👑 Booting NOUB MASTER UNIFIED ECOSYSTEM...");
+        console.log("⚽ Booting NOUB SPORTS (منصة نوب سبورتس الأصلية)...");
         
         this.telegram.init();
         SoundManager.init();
 
         try {
-            const user = await this.auth.checkUser();
-            
-            if (user) {
-                state.setUser(user);
-                this.mountAuthenticatedApp();
-            } else {
-                this.mountOnboarding();
+            let user = await this.auth.checkUser();
+            if (!user) {
+                user = {
+                    id: 'usr_noub_player_master',
+                    username: 'كابتن نوب',
+                    full_name: 'كابتن نوب الرياضي',
+                    gold_balance: 50000,
+                    role: 'PRO PLAYER',
+                    position: 'ST',
+                    reputation: 100,
+                    level: 5,
+                    xp: 4500,
+                    stats: {
+                        matches: 14,
+                        goals: 11,
+                        rating: 88
+                    },
+                    visualDna: { skin: 1, kit: '#10b981', hair: 1 }
+                };
+                localStorage.setItem('noub_user_session', JSON.stringify(user));
             }
+            state.setUser(user);
+            this.mountAuthenticatedApp();
         } catch (e) {
             console.error("Master boot exception:", e);
-            this.mountOnboarding();
+            const fallbackUser = {
+                id: 'usr_noub_player_master',
+                username: 'كابتن نوب',
+                full_name: 'كابتن نوب الرياضي',
+                gold_balance: 50000,
+                role: 'PRO PLAYER',
+                position: 'ST',
+                reputation: 100,
+                level: 5,
+                xp: 4500,
+                stats: {
+                    matches: 14,
+                    goals: 11,
+                    rating: 88
+                },
+                visualDna: { skin: 1, kit: '#10b981', hair: 1 }
+            };
+            state.setUser(fallbackUser);
+            this.mountAuthenticatedApp();
         }
 
         // Smoothly dismiss splash screen
@@ -79,77 +123,57 @@ export class NoubSportsApp {
         const user = state.data.user;
         const headerName = document.getElementById('header-user-name');
         if (headerName && user) {
-            headerName.innerText = user.full_name || 'بطل نوب الموحد';
+            headerName.innerText = user.full_name || 'كابتن نوب';
         }
 
         // Initialize All Domain Controllers
-        this.hubCtrl = new HubController(this.router);
         this.sportsCtrl = new SportsController(this.router);
+        this.homeCtrl = new HomeController(this.router);
+        this.arenaCtrl = new ArenaController(this.router);
+        this.tournamentCtrl = new TournamentController(this.router);
+        this.tacticsCtrl = new TacticsController(this.router);
+        this.teamCtrl = new TeamController(this.router);
+        this.scoutCtrl = new ScoutController(this.router);
+        this.operationsCtrl = new OperationsController(this.router);
         this.industryCtrl = new IndustryController(this.router);
         this.sanctuaryCtrl = new SanctuaryController(this.router);
         this.profileCtrl = new ProfileController(this.router);
+        this.hubCtrl = new HubController(this.router);
         this.menuCtrl = new MenuController(this.router);
 
-        this.hubCtrl.init();
+        // Expose globally for actions
+        window.sportsCtrl = this.sportsCtrl;
+        window.homeCtrl = this.homeCtrl;
+        window.arenaCtrl = this.arenaCtrl;
+        window.tournamentCtrl = this.tournamentCtrl;
+        window.tacticsCtrl = this.tacticsCtrl;
+        window.teamCtrl = this.teamCtrl;
+        window.scoutCtrl = this.scoutCtrl;
+        window.operationsCtrl = this.operationsCtrl;
+        window.industryCtrl = this.industryCtrl;
+        window.sanctuaryCtrl = this.sanctuaryCtrl;
+        window.profileCtrl = this.profileCtrl;
+        window.hubCtrl = this.hubCtrl;
+        window.menuCtrl = this.menuCtrl;
+
         this.sportsCtrl.init();
+        this.homeCtrl.init();
+        this.arenaCtrl.init();
+        this.tournamentCtrl.init();
+        this.tacticsCtrl.init();
+        this.teamCtrl.init();
+        this.scoutCtrl.init();
+        this.operationsCtrl.init();
         this.industryCtrl.init();
         this.sanctuaryCtrl.init();
         this.profileCtrl.init();
+        this.hubCtrl.init();
         this.menuCtrl.init();
 
-        // Bind Global Bottom Navbar Buttons
-        const navHub = document.getElementById('nav-hub');
-        const navSports = document.getElementById('nav-sports');
-        const navIndustry = document.getElementById('nav-industry');
-        const navSanctuary = document.getElementById('nav-sanctuary');
-        const navProfile = document.getElementById('nav-profile');
-
-        if (navHub && !navHub.dataset.bound) {
-            navHub.dataset.bound = 'true';
-            navHub.addEventListener('click', () => {
-                SoundManager.click();
-                this.hubCtrl.init();
-                this.router.navigate('view-hub');
-            });
-        }
-
-        if (navSports && !navSports.dataset.bound) {
-            navSports.dataset.bound = 'true';
-            navSports.addEventListener('click', () => {
-                SoundManager.click();
-                this.sportsCtrl.init();
-                this.router.navigate('view-sports');
-            });
-        }
-
-        if (navIndustry && !navIndustry.dataset.bound) {
-            navIndustry.dataset.bound = 'true';
-            navIndustry.addEventListener('click', () => {
-                SoundManager.click();
-                this.industryCtrl.init();
-                this.router.navigate('view-industry');
-            });
-        }
-
-        if (navSanctuary && !navSanctuary.dataset.bound) {
-            navSanctuary.dataset.bound = 'true';
-            navSanctuary.addEventListener('click', () => {
-                SoundManager.click();
-                this.sanctuaryCtrl.init();
-                this.router.navigate('view-sanctuary');
-            });
-        }
-
-        if (navProfile && !navProfile.dataset.bound) {
-            navProfile.dataset.bound = 'true';
-            navProfile.addEventListener('click', () => {
-                SoundManager.click();
-                this.profileCtrl.init();
-                this.router.navigate('view-profile');
-            });
-        }
-
-        // Start on Hub
-        this.router.navigate('view-hub');
+        // Start on NOUB SPORTS (Original 3D Player Card)
+        this.router.navigate('view-home');
     }
 }
+
+export const DynastyTycoonApp = NoubSportsApp;
+export default NoubSportsApp;

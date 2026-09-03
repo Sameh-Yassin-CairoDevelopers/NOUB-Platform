@@ -28,8 +28,13 @@
 @import url('views/splash.css');
 @import url('views/onboarding.css');
 @import url('views/hub.css');
+@import url('views/home.css');
+@import url('views/arena.css');
+@import url('views/tournament.css');
+@import url('views/tactics.css');
+@import url('views/team.css');
+@import url('views/scout.css');
 @import url('views/sports.css');
 @import url('views/industry.css');
 @import url('views/sanctuary.css');
 @import url('views/profile.css');
-@import url('views/tactics.css');

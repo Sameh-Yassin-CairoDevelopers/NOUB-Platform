@@ -84,6 +84,19 @@ class MasterStateManager {
         });
     }
 
+    // --- GETTERS & CONVENIENCE METHODS ---
+    getUser() {
+        return this.data.user;
+    }
+
+    getState() {
+        return this.data;
+    }
+
+    getRealm() {
+        return this.data.activeRealm;
+    }
+
     // --- USER PROFILE & TREASURY MUTATORS ---
     setUser(user) {
         this.data.user = user;

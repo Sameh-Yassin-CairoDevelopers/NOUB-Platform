@@ -37,6 +37,19 @@ export class SanctuaryController {
         }, 1000);
     }
 
+    switchTab(tabKey) {
+        const mapping = {
+            'specimens': 'specimens',
+            'breeding': 'breeding',
+            'market': 'passport',
+            'bonsai': 'bonsai'
+        };
+        this.activeTab = mapping[tabKey] || tabKey;
+        this.render();
+        this.bindEvents();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     render() {
         const container = document.getElementById('view-sanctuary');
         if (!container) return;
@@ -51,9 +64,9 @@ export class SanctuaryController {
                 <div class="view-header-bar">
                     <button class="btn-back-hub" id="sanctuary-back-hub">
                         <i class="fa-solid fa-arrow-right"></i>
-                        <span>العودة للبوابة الرئيسية</span>
+                        <span>الرئيسية</span>
                     </button>
-                    <h2><i class="fa-solid fa-paw text-gold"></i> محمية الأنساب والجينات (89x)</h2>
+                    <h2><i class="fa-solid fa-paw text-gold"></i> محمية الأنساب والوراثة (89x)</h2>
                 </div>
 
                 <!-- SUB-NAVIGATION TABS -->

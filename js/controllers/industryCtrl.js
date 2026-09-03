@@ -18,11 +18,28 @@ export class IndustryController {
         this.router = router;
         this.activeTab = 'workshops'; // 'workshops' | 'tombs' | 'soul' | 'projects' | 'albums'
         this.selectedTomb = null;
+        this.tombSearch = '';
+        this.tombFilter = 'all'; // 'all' | 'unlocked' | 'locked'
+        this.currentCipherTomb = null;
+        this.enteredCipherCode = '';
     }
 
     init() {
         this.render();
         this.bindEvents();
+    }
+
+    switchTab(tabKey) {
+        const mapping = {
+            'workshops': 'workshops',
+            'contracts': 'tombs',
+            'auctions': 'albums',
+            'craft': 'projects'
+        };
+        this.activeTab = mapping[tabKey] || tabKey;
+        this.render();
+        this.bindEvents();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     render() {
@@ -39,9 +56,9 @@ export class IndustryController {
                 <div class="view-header-bar">
                     <button class="btn-back-hub" id="industry-back-hub">
                         <i class="fa-solid fa-arrow-right"></i>
-                        <span>العودة للبوابة الرئيسية</span>
+                        <span>الرئيسية</span>
                     </button>
-                    <h2><i class="fa-solid fa-landmark text-gold"></i> نوب إندستري وورش الفراعنة</h2>
+                    <h2><i class="fa-solid fa-landmark text-gold"></i> ورش التصنيع ومقايضة الكروت</h2>
                 </div>
 
                 <!-- SUB-NAVIGATION TABS -->
@@ -55,16 +72,16 @@ export class IndustryController {
                         <span>شفرات وادي الملوك (${unlockedTombs.length}/62)</span>
                     </button>
                     <button class="sub-tab-btn ${this.activeTab === 'soul' ? 'active' : ''}" data-tab="soul">
-                        <i class="fa-solid fa-sun"></i>
-                        <span>كارت الروح (#9999)</span>
+                        <i class="fa-solid fa-certificate"></i>
+                        <span>كارت الصانع المعتمد (#9999)</span>
                     </button>
                     <button class="sub-tab-btn ${this.activeTab === 'projects' ? 'active' : ''}" data-tab="projects">
                         <i class="fa-solid fa-monument"></i>
-                        <span>الصروح العظيمة</span>
+                        <span>المشروعات الكبرى</span>
                     </button>
                     <button class="sub-tab-btn ${this.activeTab === 'albums' ? 'active' : ''}" data-tab="albums">
                         <i class="fa-solid fa-book-bookmark"></i>
-                        <span>ألبومات الكروت والمقايضة</span>
+                        <span>سوق الكروت والمقايضة</span>
                     </button>
                 </div>
 
@@ -153,12 +170,39 @@ export class IndustryController {
                 <!-- TAB 2: 62 KV TOMBS CODEBREAKER -->
                 <div id="tab-ind-tombs" class="tab-pane ${this.activeTab === 'tombs' ? 'active' : 'hidden'}">
                     <div class="tombs-header-banner">
-                        <h3>🏺 لغز مقابر وادي الملوك الـ 62 الخالدة</h3>
-                        <p>فك شفرات مقابر ملوك الفراعنة (من KV1 حتى KV62) باستخدام التلميحات الفلكية والحسابية لفتح الكنوز والذهب!</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <div>
+                                <h3 style="font-size: 20px; font-weight: 900; margin: 0 0 6px 0;"><i class="fa-solid fa-gem text-gold"></i> لغز مقابر وادي الملوك الـ 62 الخالدة</h3>
+                                <p style="margin: 0; font-size: 13px; color: var(--text-muted);">فك شفرات مقابر ملوك الفراعنة (من KV1 حتى KV62) بحل الألغاز والحسابات لفتح الكنوز والذهب والمقتنيات الأسطورية!</p>
+                            </div>
+                            <div style="background: rgba(212, 175, 55, 0.2); border: 1px solid var(--gold-main); padding: 8px 16px; border-radius: var(--radius-md); text-align: center;">
+                                <span style="font-size: 11px; color: var(--gold-light); display: block;">إجمالي المقابر المستكشفة</span>
+                                <strong style="font-size: 18px; color: #fff;">${unlockedTombs.length} / 62</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEARCH & FILTER CONTROLS -->
+                    <div class="tombs-controls-bar">
+                        <div class="tombs-search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="tombs-search-input" class="tombs-search-input" placeholder="ابحث برقم المقبرة (مثل 62) أو اسم الفرعون..." value="${this.tombSearch || ''}">
+                        </div>
+                        <div class="tombs-filter-tabs">
+                            <button class="filter-chip-btn ${this.tombFilter === 'all' ? 'active' : ''}" data-filter="all">
+                                الكل (62)
+                            </button>
+                            <button class="filter-chip-btn ${this.tombFilter === 'unlocked' ? 'active' : ''}" data-filter="unlocked">
+                                <i class="fa-solid fa-lock-open text-gold"></i> المفتوحة (${unlockedTombs.length})
+                            </button>
+                            <button class="filter-chip-btn ${this.tombFilter === 'locked' ? 'active' : ''}" data-filter="locked">
+                                <i class="fa-solid fa-lock"></i> المغلقة (${62 - unlockedTombs.length})
+                            </button>
+                        </div>
                     </div>
 
                     <div class="tombs-grid">
-                        ${KV_TOMBS_CATALOG.map(tomb => {
+                        ${this.getFilteredTombs(unlockedTombs).map(tomb => {
                             const isUnlocked = unlockedTombs.includes(tomb.kv_number);
                             return `
                                 <div class="tomb-card ${isUnlocked ? 'unlocked' : 'locked'}" data-kv="${tomb.kv_number}">
@@ -170,7 +214,12 @@ export class IndustryController {
                                     <p class="hint-text"><i class="fa-solid fa-lightbulb text-gold"></i> ${tomb.hint}</p>
                                     <div class="tomb-status">
                                         ${isUnlocked ? `
-                                            <span class="status-badge opened"><i class="fa-solid fa-lock-open"></i> تم الفتح والحصد</span>
+                                            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                                <span class="status-badge opened"><i class="fa-solid fa-circle-check"></i> مفتوحة</span>
+                                                <button class="btn-inspect-tomb" data-kv="${tomb.kv_number}" style="background: rgba(212,175,55,0.15); border: 1px solid var(--gold-main); color: var(--gold-light); font-size: 11px; padding: 4px 10px; border-radius: 8px; cursor: pointer;">
+                                                    <i class="fa-solid fa-eye"></i> الكنز الملكي
+                                                </button>
+                                            </div>
                                         ` : `
                                             <button class="btn-open-cipher" data-kv="${tomb.kv_number}">
                                                 <i class="fa-solid fa-key"></i>
@@ -282,6 +331,235 @@ export class IndustryController {
         `;
     }
 
+    getFilteredTombs(unlockedTombs) {
+        let tombs = [...KV_TOMBS_CATALOG];
+        if (this.tombFilter === 'unlocked') {
+            tombs = tombs.filter(t => unlockedTombs.includes(t.kv_number));
+        } else if (this.tombFilter === 'locked') {
+            tombs = tombs.filter(t => !unlockedTombs.includes(t.kv_number));
+        }
+
+        if (this.tombSearch && this.tombSearch.trim()) {
+            const query = this.tombSearch.trim().toLowerCase();
+            tombs = tombs.filter(t => 
+                t.kv_number.toString().includes(query) ||
+                (t.name_ar && t.name_ar.toLowerCase().includes(query)) ||
+                (t.dynasty && t.dynasty.toLowerCase().includes(query)) ||
+                (t.hint && t.hint.toLowerCase().includes(query))
+            );
+        }
+        return tombs;
+    }
+
+    openCipherModal(tomb) {
+        this.currentCipherTomb = tomb;
+        this.enteredCipherCode = '';
+
+        // Remove any existing cipher modal
+        document.getElementById('tomb-cipher-modal-overlay')?.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'tomb-cipher-modal-overlay';
+        overlay.className = 'cipher-modal-backdrop';
+
+        overlay.innerHTML = `
+            <div class="cipher-modal-card">
+                <button class="cipher-modal-close" id="btn-cipher-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="cipher-tomb-header">
+                    <span class="cipher-kv-pill">KV${tomb.kv_number} • ${tomb.dynasty}</span>
+                    <h3>${tomb.name_ar}</h3>
+                    <span class="cipher-dynasty">الرمز الأثري المفقود (${tomb.code_length} أرقام)</span>
+                </div>
+
+                <div class="cipher-hint-box">
+                    <strong><i class="fa-solid fa-lightbulb text-gold"></i> لغز فتح المقبرة:</strong>
+                    ${tomb.hint}
+                </div>
+
+                <div class="cipher-display-box">
+                    <div class="cipher-display-digits" id="cipher-digits-display">
+                        ${'_ '.repeat(tomb.code_length).trim()}
+                    </div>
+                </div>
+
+                <div class="cipher-keypad">
+                    <button class="cipher-key" data-digit="1">1</button>
+                    <button class="cipher-key" data-digit="2">2</button>
+                    <button class="cipher-key" data-digit="3">3</button>
+                    <button class="cipher-key" data-digit="4">4</button>
+                    <button class="cipher-key" data-digit="5">5</button>
+                    <button class="cipher-key" data-digit="6">6</button>
+                    <button class="cipher-key" data-digit="7">7</button>
+                    <button class="cipher-key" data-digit="8">8</button>
+                    <button class="cipher-key" data-digit="9">9</button>
+                    <button class="cipher-key key-action" id="btn-cipher-backspace"><i class="fa-solid fa-delete-left"></i></button>
+                    <button class="cipher-key" data-digit="0">0</button>
+                    <button class="cipher-key key-action" id="btn-cipher-clear"><i class="fa-solid fa-rotate-left"></i></button>
+                </div>
+
+                <div class="cipher-actions-row">
+                    <button class="btn-cipher-hint" id="btn-cipher-reveal">
+                        <i class="fa-solid fa-wand-magic-sparkles text-gold"></i> مساعدة الحكيم
+                    </button>
+                    <button class="btn-cipher-unlock" id="btn-cipher-submit">
+                        <i class="fa-solid fa-unlock-keyhole"></i> فك الشفرة وحصد الكنز
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const updateDisplay = () => {
+            const disp = document.getElementById('cipher-digits-display');
+            if (!disp) return;
+            if (this.enteredCipherCode.length === 0) {
+                disp.innerText = '_ '.repeat(tomb.code_length).trim();
+            } else {
+                let text = this.enteredCipherCode;
+                const remaining = tomb.code_length - text.length;
+                if (remaining > 0) {
+                    text += ' _'.repeat(remaining);
+                }
+                disp.innerText = text;
+            }
+        };
+
+        // Keypad buttons
+        overlay.querySelectorAll('.cipher-key[data-digit]').forEach(k => {
+            k.addEventListener('click', () => {
+                if (this.enteredCipherCode.length < tomb.code_length) {
+                    this.enteredCipherCode += k.dataset.digit;
+                    SoundManager.click();
+                    updateDisplay();
+                }
+            });
+        });
+
+        // Backspace
+        overlay.querySelector('#btn-cipher-backspace')?.addEventListener('click', () => {
+            this.enteredCipherCode = this.enteredCipherCode.slice(0, -1);
+            SoundManager.click();
+            updateDisplay();
+        });
+
+        // Clear
+        overlay.querySelector('#btn-cipher-clear')?.addEventListener('click', () => {
+            this.enteredCipherCode = '';
+            SoundManager.click();
+            updateDisplay();
+        });
+
+        // Close
+        const closeModal = () => {
+            overlay.remove();
+        };
+
+        overlay.querySelector('#btn-cipher-close')?.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+
+        // Reveal hint / Sage assistant
+        overlay.querySelector('#btn-cipher-reveal')?.addEventListener('click', () => {
+            this.enteredCipherCode = tomb.secret_code.toString();
+            updateDisplay();
+            NotificationService.showToast(`✨ همس لك حكيم المعبد: الشفرة التاريخية هي (${tomb.secret_code})!`, 'info');
+        });
+
+        // Submit unlock
+        overlay.querySelector('#btn-cipher-submit')?.addEventListener('click', () => {
+            if (!this.enteredCipherCode) {
+                NotificationService.showToast('يرجى إدخال الرمز السري أولاً', 'alert');
+                return;
+            }
+
+            const res = IndustryService.tryUnlockTomb(tomb.kv_number, this.enteredCipherCode);
+            if (res.success) {
+                closeModal();
+                SoundManager.playGoldChime();
+                VisualEffects.triggerConfetti();
+                NotificationService.showToast(`🎉 مبروك! فتحت ${tomb.name_ar} (KV${tomb.kv_number}) وحصلت على ${res.rewardGold} ذهب وكنوز نادرة!`, 'success');
+                this.render();
+                this.bindEvents();
+            } else {
+                NotificationService.showToast(res.message, 'alert');
+                const dispBox = overlay.querySelector('.cipher-display-box');
+                if (dispBox) {
+                    dispBox.style.borderColor = '#ef4444';
+                    setTimeout(() => {
+                        dispBox.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                    }, 800);
+                }
+            }
+        });
+    }
+
+    openTombDetailsModal(tomb) {
+        document.getElementById('tomb-cipher-modal-overlay')?.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'tomb-cipher-modal-overlay';
+        overlay.className = 'cipher-modal-backdrop';
+
+        const rewardGold = 1500 + (tomb.kv_number * 100);
+
+        overlay.innerHTML = `
+            <div class="cipher-modal-card">
+                <button class="cipher-modal-close" id="btn-tomb-detail-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="cipher-tomb-header">
+                    <span class="cipher-kv-pill" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #10b981;">
+                        <i class="fa-solid fa-circle-check"></i> مقبرة مستكشفة ومفتوحة
+                    </span>
+                    <h3>${tomb.name_ar} (KV${tomb.kv_number})</h3>
+                    <span class="cipher-dynasty">${tomb.dynasty} • الشفرة: ${tomb.secret_code}</span>
+                </div>
+
+                <div class="cipher-hint-box" style="border-style: solid; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.08);">
+                    <strong><i class="fa-solid fa-scroll text-gold"></i> الحقيقة التاريخية واللغز:</strong>
+                    ${tomb.hint}
+                </div>
+
+                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+                    <h4 style="font-size: 14px; color: var(--gold-light); margin: 0 0 10px 0;"><i class="fa-solid fa-sack-dollar"></i> الكنوز والمكافآت المحصودة:</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center;">
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.2);">
+                            <span style="font-size: 11px; color: var(--text-muted); display: block;">الذهب</span>
+                            <strong style="color: var(--gold-light); font-size: 14px;">+${rewardGold}</strong>
+                        </div>
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.2);">
+                            <span style="font-size: 11px; color: var(--text-muted); display: block;">رقائق ذهب</span>
+                            <strong style="color: #fff; font-size: 14px;">+3</strong>
+                        </div>
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.2);">
+                            <span style="font-size: 11px; color: var(--text-muted); display: block;">حجر لازورد</span>
+                            <strong style="color: #60a5fa; font-size: 14px;">+1</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-cipher-unlock" id="btn-tomb-detail-ok" style="width: 100%;">
+                    <i class="fa-solid fa-check"></i> إغلاق سجل المقبرة
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const closeDetail = () => overlay.remove();
+        overlay.querySelector('#btn-tomb-detail-close')?.addEventListener('click', closeDetail);
+        overlay.querySelector('#btn-tomb-detail-ok')?.addEventListener('click', closeDetail);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeDetail();
+        });
+    }
+
     bindEvents() {
         const container = document.getElementById('view-industry');
         if (!container) return;
@@ -302,6 +580,59 @@ export class IndustryController {
             });
         });
 
+        // Search Input in Tombs
+        const searchInput = container.querySelector('#tombs-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.tombSearch = e.target.value;
+                const grid = container.querySelector('.tombs-grid');
+                const unlockedTombs = state.data.industry.unlockedTombs || [];
+                if (grid) {
+                    grid.innerHTML = this.getFilteredTombs(unlockedTombs).map(tomb => {
+                        const isUnlocked = unlockedTombs.includes(tomb.kv_number);
+                        return `
+                            <div class="tomb-card ${isUnlocked ? 'unlocked' : 'locked'}" data-kv="${tomb.kv_number}">
+                                <div class="tomb-top">
+                                    <span class="kv-tag">KV${tomb.kv_number}</span>
+                                    <span class="dynasty-tag">${tomb.dynasty}</span>
+                                </div>
+                                <h4>${tomb.name_ar}</h4>
+                                <p class="hint-text"><i class="fa-solid fa-lightbulb text-gold"></i> ${tomb.hint}</p>
+                                <div class="tomb-status">
+                                    ${isUnlocked ? `
+                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                            <span class="status-badge opened"><i class="fa-solid fa-circle-check"></i> مفتوحة</span>
+                                            <button class="btn-inspect-tomb" data-kv="${tomb.kv_number}" style="background: rgba(212,175,55,0.15); border: 1px solid var(--gold-main); color: var(--gold-light); font-size: 11px; padding: 4px 10px; border-radius: 8px; cursor: pointer;">
+                                                <i class="fa-solid fa-eye"></i> الكنز الملكي
+                                            </button>
+                                        </div>
+                                    ` : `
+                                        <button class="btn-open-cipher" data-kv="${tomb.kv_number}">
+                                            <i class="fa-solid fa-key"></i>
+                                            <span>فك الشفرة السرية</span>
+                                        </button>
+                                    `}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    this.bindTombCards(container);
+                }
+            });
+        }
+
+        // Filter chips in Tombs
+        container.querySelectorAll('.filter-chip-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.tombFilter = btn.dataset.filter;
+                this.render();
+                this.bindEvents();
+                SoundManager.click();
+            });
+        });
+
+        this.bindTombCards(container);
+
         // Upgrade Workshop
         container.querySelectorAll('.btn-upgrade-ws').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -315,25 +646,6 @@ export class IndustryController {
                     this.bindEvents();
                 } else {
                     NotificationService.showToast(result.message, 'alert');
-                }
-            });
-        });
-
-        // Open Tomb Cipher
-        container.querySelectorAll('.btn-open-cipher').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const kv = Number(btn.dataset.kv);
-                const code = prompt(`أدخل الرمز السري لفك شفرة المقبرة KV${kv}:`);
-                if (!code) return;
-
-                const res = IndustryService.tryUnlockTomb(kv, code);
-                if (res.success) {
-                    SoundManager.playGoldChime();
-                    VisualEffects.triggerConfetti();
-                    this.render();
-                    this.bindEvents();
-                } else {
-                    NotificationService.showToast(res.message, 'alert');
                 }
             });
         });
@@ -359,6 +671,30 @@ export class IndustryController {
                     this.bindEvents();
                 } else {
                     NotificationService.showToast(res.message, 'alert');
+                }
+            });
+        });
+    }
+
+    bindTombCards(container) {
+        // Open Tomb Cipher Modal
+        container.querySelectorAll('.btn-open-cipher').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const kv = Number(btn.dataset.kv);
+                const tomb = KV_TOMBS_CATALOG.find(t => t.kv_number === kv);
+                if (tomb) {
+                    this.openCipherModal(tomb);
+                }
+            });
+        });
+
+        // Inspect unlocked tomb
+        container.querySelectorAll('.btn-inspect-tomb').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const kv = Number(btn.dataset.kv);
+                const tomb = KV_TOMBS_CATALOG.find(t => t.kv_number === kv);
+                if (tomb) {
+                    this.openTombDetailsModal(tomb);
                 }
             });
         });

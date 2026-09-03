@@ -22,6 +22,7 @@ import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { SanctuaryView } from './components/SanctuaryView';
 import { WorkshopsView } from './components/WorkshopsView';
+import { TombsView } from './components/TombsView';
 import { ExportBoardView } from './components/ExportBoardView';
 import { TournamentsView } from './components/TournamentsView';
 import { MarketView } from './components/MarketView';
@@ -82,6 +83,16 @@ export default function App() {
 
   const [tournaments] = useState<Tournament[]>(INITIAL_TOURNAMENTS);
 
+  // Unlocked Pharaohs Tombs state (KV1 to KV62)
+  const [unlockedTombs, setUnlockedTombs] = useState<number[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY + '_unlocked_tombs');
+      return saved ? JSON.parse(saved) : [1, 2];
+    } catch {
+      return [1, 2];
+    }
+  });
+
   // Modals state
   const [passportCreature, setPassportCreature] = useState<Creature | null>(null);
   const [breedingInitialCreature, setBreedingInitialCreature] = useState<Creature | null>(null);
@@ -111,10 +122,27 @@ export default function App() {
       localStorage.setItem(STORAGE_KEY + '_resources', JSON.stringify(resources));
       localStorage.setItem(STORAGE_KEY + '_workshops', JSON.stringify(workshops));
       localStorage.setItem(STORAGE_KEY + '_contracts', JSON.stringify(contracts));
+      localStorage.setItem(STORAGE_KEY + '_unlocked_tombs', JSON.stringify(unlockedTombs));
     } catch {
       // Ignore storage quota errors
     }
-  }, [empire, creatures, resources, workshops, contracts]);
+  }, [empire, creatures, resources, workshops, contracts, unlockedTombs]);
+
+  // Handle unlocking a tomb from the cipher game
+  const handleUnlockTomb = (kvNumber: number, rewardGold: number, rewardStars: number) => {
+    setUnlockedTombs(prev => {
+      if (prev.includes(kvNumber)) return prev;
+      return [...prev, kvNumber];
+    });
+
+    setEmpire(prev => ({
+      ...prev,
+      gold: prev.gold + rewardGold,
+      stars: prev.stars + rewardStars
+    }));
+
+    showToast(`👑 تم فك شفرة المقبرة KV #${kvNumber} بنجاح! حصدت +${rewardGold.toLocaleString()} ذهب و +${rewardStars}⭐!`);
+  };
 
   // Main 89x Acceleration Game Loop Timer (Ticks every 1 second)
   useEffect(() => {
@@ -616,6 +644,15 @@ export default function App() {
             onStartProduction={handleStartProduction}
             onCollectProduction={handleCollectProduction}
             onUpgradeWorkshop={handleUpgradeWorkshop}
+          />
+        )}
+
+        {empire.activeTab === 'tombs' && (
+          <TombsView
+            unlockedTombs={unlockedTombs}
+            gold={empire.gold}
+            stars={empire.stars}
+            onUnlockTomb={handleUnlockTomb}
           />
         )}
 

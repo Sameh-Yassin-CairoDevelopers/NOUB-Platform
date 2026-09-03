@@ -29,11 +29,24 @@ export class HubController {
         }
     }
 
+    switchTab(tabKey) {
+        if (tabKey === 'ads') {
+            const act = document.querySelector('.hub-activity-card');
+            act?.scrollIntoView({ behavior: 'smooth' });
+        } else if (tabKey === 'emergencies') {
+            this.router.navigate('view-arena');
+        } else if (tabKey === 'rank') {
+            this.router.navigate('view-tournaments');
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
     render() {
         const container = document.getElementById('view-hub');
         if (!container) return;
 
-        const user = state.data.user || { full_name: 'بطل نوب', gold_balance: 10000, level: 1, xp: 0 };
+        const user = state.data.user || { full_name: 'كابتن نوب', gold_balance: 10000, level: 1, xp: 0 };
         const level = user.level || 1;
         const xp = user.xp || 0;
         const nextLevelXP = level * 1000;
@@ -48,7 +61,7 @@ export class HubController {
                 <div class="master-hud-banner">
                     <div class="hud-top-row">
                         <div class="user-welcome">
-                            <span class="greeting-tag">👑 المنظومة الملكية الموحدة</span>
+                            <span class="greeting-tag"><i class="fa-solid fa-layer-group"></i> منظومة نوب الموحدة</span>
                             <h2>أهلاً بك، ${user.full_name}</h2>
                         </div>
                         <div class="gold-treasury-badge" id="hub-gold-badge">
@@ -77,26 +90,26 @@ export class HubController {
                 <div class="hub-quick-strip">
                     <button class="quick-action-pill" id="hub-harvest-btn">
                         <i class="fa-solid fa-wheat-awn"></i>
-                        <span>حصد ورش الفراعنة (+موارِد)</span>
+                        <span>جمع إنتاج الورش (+موارِد)</span>
                     </button>
                     ${activeGestation.length > 0 ? `
                     <button class="quick-action-pill highlight" id="hub-gestation-btn">
                         <i class="fa-solid fa-dna"></i>
-                        <span>حمل بيولوجي نشط (${activeGestation.length})</span>
+                        <span>حضانات نشطة (${activeGestation.length})</span>
                     </button>
                     ` : ''}
                     ${emergencies.length > 0 ? `
                     <button class="quick-action-pill emergency" id="hub-emergency-btn">
                         <i class="fa-solid fa-triangle-exclamation"></i>
-                        <span>نداءات طوارئ (${emergencies.length})</span>
+                        <span>نداءات طوارئ بالملاعب (${emergencies.length})</span>
                     </button>
                     ` : ''}
                 </div>
 
                 <!-- 3 GRAND REALM PORTALS -->
                 <div class="realms-heading">
-                    <h3><i class="fa-solid fa-layer-group"></i> بوابات العوالم الثلاثة</h3>
-                    <p>تنقل بسلاسة عبر حسابك وخزنتك الموحدة</p>
+                    <h3><i class="fa-solid fa-layer-group"></i> قطاعات منظومة نوب</h3>
+                    <p>اختر القسم الرياضي أو الإنتاجي أو الوراثي للبدء</p>
                 </div>
 
                 <div class="realms-grid">
@@ -109,9 +122,9 @@ export class HubController {
                         <div class="realm-content">
                             <span class="realm-badge sports">قطاع الرياضة</span>
                             <h4>منصة نوب سبورتس</h4>
-                            <p>كروت الهوية الرقمية 3D، ساحة حجز المباريات، رادار الكشافة، السبورة التكتيكية، وبطولات رمضان.</p>
+                            <p>كروت اللاعبين الرقمية 3D، حجز الملاعب والمباريات، رادار الكشافة، السبورة التكتيكية، وبطولات رمضان الشعبية.</p>
                             <div class="realm-footer">
-                                <span>دخول المنصة الرياضية</span>
+                                <span>دخول منصة الرياضة</span>
                                 <i class="fa-solid fa-arrow-left"></i>
                             </div>
                         </div>
@@ -124,11 +137,11 @@ export class HubController {
                             <i class="fa-solid fa-landmark"></i>
                         </div>
                         <div class="realm-content">
-                            <span class="realm-badge industry">قطاع الصناعة والفراعنة</span>
-                            <h4>نوب إندستري وورش الفراعنة</h4>
-                            <p>ورش الحرف وتصنيع الموارد، فك شفرات مقابر وادي الملوك (1-62)، كارت الروح الأبدي #9999 بقوة كولاتز، وسوق المقايضة P2P.</p>
+                            <span class="realm-badge industry">قطاع التصنيع والتجارة</span>
+                            <h4>ورش التصنيع ومقايضة الكروت</h4>
+                            <p>ورش إنتاج الموارد، كشوفات وادي الملوك الأثرية (1-62)، كارت المصنع المعتمد، وسوق التبادل والمقايضة P2P.</p>
                             <div class="realm-footer">
-                                <span>دخول الصروح الفرعونية</span>
+                                <span>دخول ورش التصنيع</span>
                                 <i class="fa-solid fa-arrow-left"></i>
                             </div>
                         </div>
@@ -142,10 +155,10 @@ export class HubController {
                         </div>
                         <div class="realm-content">
                             <span class="realm-badge sanctuary">قطاع الأنساب والوراثة</span>
-                            <h4>محمية الأنساب والجينات (89x)</h4>
-                            <p>سلالات الكلاب، القطط، الخيل العربي، الحمام، الإبل، وأشجار البونساي. كروت هولوجرامية فاحصة للـ Loci ودورات حمل متسارعة 89 ضعفاً.</p>
+                            <h4>محمية الأنساب والوراثة (89x)</h4>
+                            <p>سجلات أنساب الخيل العربي، الإبل، الحمام، الكلاب، القطط، وأشجار البونساي، مع الحضانة المتسارعة 89x.</p>
                             <div class="realm-footer">
-                                <span>دخول المحمية البيولوجية</span>
+                                <span>دخول محمية الأنساب</span>
                                 <i class="fa-solid fa-arrow-left"></i>
                             </div>
                         </div>
@@ -193,7 +206,7 @@ export class HubController {
         // Portal clicks
         container.querySelector('#portal-sports')?.addEventListener('click', () => {
             SoundManager.click();
-            this.router.navigate('view-sports');
+            this.router.navigate('view-home');
         });
 
         container.querySelector('#portal-industry')?.addEventListener('click', () => {
@@ -223,7 +236,7 @@ export class HubController {
         // Emergency shortcut
         container.querySelector('#hub-emergency-btn')?.addEventListener('click', () => {
             SoundManager.click();
-            this.router.navigate('view-sports');
+            this.router.navigate('view-arena');
         });
     }
 

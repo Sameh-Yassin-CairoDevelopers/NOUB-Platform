@@ -153,6 +153,18 @@ export interface Tournament {
   description: string;
 }
 
+export interface Tomb {
+  kv_number: number;
+  name_ar: string;
+  dynasty: string;
+  code_length: number;
+  secret_code: number;
+  hint: string;
+  rewardGold: number;
+  rewardStars: number;
+  treasureName: string;
+}
+
 export interface PlayerEmpire {
   name: string;
   dynastyTitle: string;
@@ -164,6 +176,7 @@ export interface PlayerEmpire {
   gameSpeed: number; // 89x default
   isSpeedActive: boolean;
   soundEnabled: boolean;
-  activeTab: 'sanctuary' | 'workshops' | 'export_board' | 'tournaments' | 'market';
+  activeTab: 'sanctuary' | 'workshops' | 'tombs' | 'export_board' | 'tournaments' | 'market';
   lastTickTimestamp: number;
+  unlockedTombs?: number[];
 }

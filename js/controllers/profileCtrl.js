@@ -23,11 +23,23 @@ export class ProfileController {
         this.bindEvents();
     }
 
+    switchTab(tabKey) {
+        if (tabKey === 'treasury') {
+            document.querySelector('.treasury-breakdown-grid')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (tabKey === 'badges') {
+            document.querySelector('.profile-badges-card')?.scrollIntoView({ behavior: 'smooth' });
+        } else if (tabKey === 'settings') {
+            document.querySelector('.profile-actions')?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
     render() {
         const container = document.getElementById('view-profile');
         if (!container) return;
 
-        const user = state.data.user || { full_name: 'بطل نوب', gold_balance: 10000, level: 1, xp: 250 };
+        const user = state.data.user || { full_name: 'كابتن نوب', gold_balance: 10000, level: 1, xp: 250 };
         const card = state.data.sports.card || {};
         const soul = state.data.industry.soulCard;
         const specimensCount = (state.data.sanctuary.specimens || []).length;
@@ -38,9 +50,9 @@ export class ProfileController {
                 <div class="view-header-bar">
                     <button class="btn-back-hub" id="profile-back-hub">
                         <i class="fa-solid fa-arrow-right"></i>
-                        <span>العودة للبوابة الرئيسية</span>
+                        <span>الرئيسية</span>
                     </button>
-                    <h2><i class="fa-solid fa-user-shield text-gold"></i> الحساب والملف الشخصي الموحد</h2>
+                    <h2><i class="fa-solid fa-user-shield text-gold"></i> الحساب والملف الشخصي</h2>
                 </div>
 
                 <!-- PROFILE HEADER CARD -->

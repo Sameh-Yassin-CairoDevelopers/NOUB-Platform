@@ -69,6 +69,11 @@ export class OperationsController {
             this.toggleFab(false);
             this.router.navigate('view-tournaments');
         });
+
+        document.getElementById('fab-action-card')?.addEventListener('click', () => {
+            this.toggleFab(false);
+            this.router.navigate('view-home');
+        });
     }
 
     toggleFab(open) {

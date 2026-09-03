@@ -1,18 +1,19 @@
 import { Creature, ExportContract, PlayerEmpire, ResourceItem, Tournament, Workshop, WorkshopRecipe } from '../types';
 
 export const INITIAL_EMPIRE: PlayerEmpire = {
-  name: 'محمية سلالات النخبة الملكية',
-  dynastyTitle: 'كبير مربي الأنساب والمصانع',
-  gold: 4850,
-  stars: 45,
-  fameLevel: 1,
-  fameXp: 180,
-  fameXpMax: 500,
+  name: 'إمبراطورية سلالات الفراعنة والورش الكبرى',
+  dynastyTitle: 'حاكم صروح وادي الملوك ومحمية الأنساب',
+  gold: 25000,
+  stars: 120,
+  fameLevel: 3,
+  fameXp: 350,
+  fameXpMax: 800,
   gameSpeed: 89,
   isSpeedActive: true,
   soundEnabled: true,
-  activeTab: 'sanctuary',
-  lastTickTimestamp: Date.now()
+  activeTab: 'tombs',
+  lastTickTimestamp: Date.now(),
+  unlockedTombs: [1, 2]
 };
 
 export const INITIAL_CREATURES: Creature[] = [

@@ -37,14 +37,39 @@ export class MenuController {
         });
 
         // Menu items
-        document.getElementById('menu-hub-btn')?.addEventListener('click', () => {
+        document.getElementById('menu-card-btn')?.addEventListener('click', () => {
             overlay?.classList.remove('open');
-            this.router.navigate('view-hub');
+            this.router.navigate('view-home');
         });
 
-        document.getElementById('menu-sports-btn')?.addEventListener('click', () => {
+        document.getElementById('menu-arena-btn')?.addEventListener('click', () => {
             overlay?.classList.remove('open');
-            this.router.navigate('view-sports');
+            this.router.navigate('view-arena');
+        });
+
+        document.getElementById('menu-tournament-btn')?.addEventListener('click', () => {
+            overlay?.classList.remove('open');
+            this.router.navigate('view-tournaments');
+        });
+
+        document.getElementById('menu-tactics-btn')?.addEventListener('click', () => {
+            overlay?.classList.remove('open');
+            this.router.navigate('view-tactics');
+        });
+
+        document.getElementById('menu-team-btn')?.addEventListener('click', () => {
+            overlay?.classList.remove('open');
+            this.router.navigate('view-team');
+        });
+
+        document.getElementById('menu-scout-btn')?.addEventListener('click', () => {
+            overlay?.classList.remove('open');
+            this.router.navigate('view-scout');
+        });
+
+        document.getElementById('menu-operations-btn')?.addEventListener('click', () => {
+            overlay?.classList.remove('open');
+            this.router.navigate('view-operations');
         });
 
         document.getElementById('menu-industry-btn')?.addEventListener('click', () => {
@@ -60,6 +85,11 @@ export class MenuController {
         document.getElementById('menu-profile-btn')?.addEventListener('click', () => {
             overlay?.classList.remove('open');
             this.router.navigate('view-profile');
+        });
+
+        document.getElementById('menu-hub-btn')?.addEventListener('click', () => {
+            overlay?.classList.remove('open');
+            this.router.navigate('view-hub');
         });
 
         document.getElementById('menu-logout-btn')?.addEventListener('click', async () => {

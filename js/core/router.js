@@ -43,33 +43,39 @@ export class Router {
             this.currentSubTab = subTab;
 
             // Determine active world
-            let realm = 'hub';
-            let worldTitle = 'الرئيسية الموحدة';
-            let worldIcon = 'fa-house';
+            let realm = 'sports';
+            let worldTitle = 'منصة نوب سبورتس (NOUB SPORTS)';
+            let worldIcon = 'fa-futbol';
 
-            if (viewId === 'view-sports' || viewId === 'view-arena' || viewId === 'view-scout' || viewId === 'view-team' || viewId === 'view-tournaments' || viewId === 'view-tactics') {
+            if (viewId === 'view-sports' || viewId === 'view-home' || viewId === 'view-arena' || 
+                viewId === 'view-tournaments' || viewId === 'view-tactics' || viewId === 'view-scout' || 
+                viewId === 'view-team' || viewId === 'view-operations') {
                 realm = 'sports';
-                worldTitle = 'منصة نوب سبورتس';
+                worldTitle = 'منصة نوب سبورتس (NOUB SPORTS)';
                 worldIcon = 'fa-futbol';
             } else if (viewId === 'view-industry') {
                 realm = 'industry';
-                worldTitle = 'ورش وصروح الفراعنة';
+                worldTitle = 'ورش وصروح الفراعنة ومقابر الملوك';
                 worldIcon = 'fa-landmark';
             } else if (viewId === 'view-sanctuary') {
                 realm = 'sanctuary';
-                worldTitle = 'محمية الأنساب 89x';
+                worldTitle = 'محمية الأنساب والوراثة 89x';
                 worldIcon = 'fa-paw';
             } else if (viewId === 'view-profile') {
                 realm = 'profile';
-                worldTitle = 'حسابي والخزنة المركزية';
-                worldIcon = 'fa-user-shield';
+                worldTitle = 'الخزنة الملكية والأصول';
+                worldIcon = 'fa-vault';
+            } else if (viewId === 'view-hub') {
+                realm = 'hub';
+                worldTitle = 'سلالات الفراعنة والورش الكبرى';
+                worldIcon = 'fa-crown';
             } else if (viewId === 'view-onboarding') {
                 realm = 'onboarding';
             }
 
             state.setRealm(realm);
             this.updateHeaderWorldBadge(worldTitle, worldIcon);
-            this.renderDynamicNavbar(realm, subTab);
+            this.renderDynamicNavbar(realm, viewId, subTab);
 
             // Notify controllers
             this.onNavChangeCallbacks.forEach(cb => cb(realm, viewId, subTab));
@@ -102,7 +108,7 @@ export class Router {
     /**
      * Renders a dedicated bottom navbar for the active world.
      */
-    renderDynamicNavbar(realm, activeSubTab) {
+    renderDynamicNavbar(realm, activeViewId, activeSubTab) {
         const navbar = document.getElementById('global-navbar');
         if (!navbar) return;
 
@@ -116,60 +122,77 @@ export class Router {
         let buttons = [];
 
         if (realm === 'sports') {
-            const defTab = activeSubTab || 'matches';
             buttons = [
-                { id: 'tab-matches', icon: 'fa-futbol', label: 'المباريات', action: () => window.sportsCtrl?.switchTab('matches') },
-                { id: 'tab-tournaments', icon: 'fa-trophy', label: 'البطولات', action: () => window.sportsCtrl?.switchTab('tournaments') },
-                { id: 'tab-tactics', icon: 'fa-chalkboard-user', label: 'التكتيك', action: () => window.sportsCtrl?.switchTab('tactics') },
-                { id: 'tab-team', icon: 'fa-shield-halved', label: 'فريقـي', action: () => window.sportsCtrl?.switchTab('team') },
-                { id: 'tab-scout', icon: 'fa-binoculars', label: 'الكشافين', action: () => window.sportsCtrl?.switchTab('scout') },
-                { id: 'tab-emergency', icon: 'fa-triangle-exclamation', label: 'طوارئ SOS', action: () => window.sportsCtrl?.switchTab('emergency') },
-                { id: 'tab-card', icon: 'fa-id-card', label: 'كارتي 3D', action: () => window.sportsCtrl?.switchTab('card') },
+                { id: 'sports-nav-home', icon: 'fa-id-card', label: 'كارتي 3D', isActive: activeViewId === 'view-home', action: () => this.navigate('view-home') },
+                { id: 'sports-nav-arena', icon: 'fa-futbol', label: 'المباريات', isActive: activeViewId === 'view-arena', action: () => this.navigate('view-arena') },
+                { id: 'nav-action', icon: 'fa-plus', label: '', isActionCenter: true, action: () => window.operationsCtrl?.toggleFab(true) },
+                { id: 'sports-nav-tourn', icon: 'fa-trophy', label: 'البطولات', isActive: activeViewId === 'view-tournaments', action: () => this.navigate('view-tournaments') },
+                { id: 'sports-nav-tactics', icon: 'fa-chalkboard-user', label: 'التكتيك', isActive: activeViewId === 'view-tactics', action: () => this.navigate('view-tactics') },
             ];
         } else if (realm === 'industry') {
             buttons = [
-                { id: 'tab-workshops', icon: 'fa-wheat-awn', label: 'الورش', action: () => window.industryCtrl?.switchTab('workshops') },
-                { id: 'tab-contracts', icon: 'fa-scroll', label: 'العقود', action: () => window.industryCtrl?.switchTab('contracts') },
-                { id: 'tab-auctions', icon: 'fa-scale-balanced', label: 'المزاد', action: () => window.industryCtrl?.switchTab('auctions') },
-                { id: 'tab-craft', icon: 'fa-flask-vial', label: 'المختبر', action: () => window.industryCtrl?.switchTab('craft') },
+                { id: 'ind-workshops', icon: 'fa-wheat-awn', label: 'الورش', isActive: !activeSubTab || activeSubTab === 'workshops', action: () => window.industryCtrl?.switchTab('workshops') },
+                { id: 'ind-tombs', icon: 'fa-gem', label: 'المقابر 62', isActive: activeSubTab === 'tombs', action: () => window.industryCtrl?.switchTab('tombs') },
+                { id: 'ind-soul', icon: 'fa-infinity', label: 'كارت الروح', isActive: activeSubTab === 'soul', action: () => window.industryCtrl?.switchTab('soul') },
+                { id: 'ind-projects', icon: 'fa-monument', label: 'الصروح', isActive: activeSubTab === 'projects', action: () => window.industryCtrl?.switchTab('projects') },
+                { id: 'ind-home', icon: 'fa-house', label: 'الرئيسية', isActive: false, action: () => this.navigate('view-hub') },
             ];
         } else if (realm === 'sanctuary') {
             buttons = [
-                { id: 'tab-pedigree', icon: 'fa-dna', label: 'الأنساب 89x', action: () => window.sanctuaryCtrl?.switchTab('pedigree') },
-                { id: 'tab-gestation', icon: 'fa-heart-pulse', label: 'الحضانة', action: () => window.sanctuaryCtrl?.switchTab('gestation') },
-                { id: 'tab-farm', icon: 'fa-seedling', label: 'المزرعة', action: () => window.sanctuaryCtrl?.switchTab('farm') },
-                { id: 'tab-market', icon: 'fa-paw', label: 'السوق', action: () => window.sanctuaryCtrl?.switchTab('market') },
+                { id: 'sanc-pedigree', icon: 'fa-dna', label: 'الأنساب', isActive: !activeSubTab || activeSubTab === 'pedigree', action: () => window.sanctuaryCtrl?.switchTab('pedigree') },
+                { id: 'sanc-gestation', icon: 'fa-heart-pulse', label: 'الحضانة', isActive: activeSubTab === 'gestation', action: () => window.sanctuaryCtrl?.switchTab('gestation') },
+                { id: 'sanc-farm', icon: 'fa-seedling', label: 'المزرعة', isActive: activeSubTab === 'farm', action: () => window.sanctuaryCtrl?.switchTab('farm') },
+                { id: 'sanc-market', icon: 'fa-paw', label: 'السوق', isActive: activeSubTab === 'market', action: () => window.sanctuaryCtrl?.switchTab('market') },
+                { id: 'sanc-home', icon: 'fa-house', label: 'الرئيسية', isActive: false, action: () => this.navigate('view-hub') },
             ];
         } else if (realm === 'profile') {
             buttons = [
-                { id: 'tab-overview', icon: 'fa-user-astronaut', label: 'الملف والـ DNA', action: () => window.profileCtrl?.switchTab('overview') },
-                { id: 'tab-vault', icon: 'fa-vault', label: 'الخزنة والذهب', action: () => window.profileCtrl?.switchTab('vault') },
-                { id: 'tab-stats', icon: 'fa-chart-pie', label: 'الإحصائيات', action: () => window.profileCtrl?.switchTab('stats') },
-                { id: 'tab-edit', icon: 'fa-user-pen', label: 'تعديل البيانات', action: () => window.profileCtrl?.switchTab('edit') },
+                { id: 'prof-overview', icon: 'fa-crown', label: 'العرش واللقب', isActive: !activeSubTab || activeSubTab === 'overview', action: () => window.profileCtrl?.switchTab('overview') },
+                { id: 'prof-vault', icon: 'fa-vault', label: 'الخزنة', isActive: activeSubTab === 'vault', action: () => window.profileCtrl?.switchTab('vault') },
+                { id: 'prof-stats', icon: 'fa-chart-pie', label: 'الأصول', isActive: activeSubTab === 'stats', action: () => window.profileCtrl?.switchTab('stats') },
+                { id: 'prof-home', icon: 'fa-house', label: 'الرئيسية', isActive: false, action: () => this.navigate('view-hub') },
             ];
         } else {
-            // Default Hub
+            // Default Pharaonic Hub
             buttons = [
-                { id: 'tab-hub-home', icon: 'fa-house', label: 'الرئيسية', action: () => this.navigate('view-hub') },
-                { id: 'tab-hub-ads', icon: 'fa-bullhorn', label: 'الإعلانات والطلبات', action: () => window.hubCtrl?.switchTab('ads') },
-                { id: 'tab-hub-emergencies', icon: 'fa-triangle-exclamation', label: 'الطوارئ', action: () => window.hubCtrl?.switchTab('emergencies') },
-                { id: 'tab-hub-rank', icon: 'fa-ranking-star', label: 'المتصدرين', action: () => window.hubCtrl?.switchTab('rank') },
+                { id: 'hub-main', icon: 'fa-house', label: 'الرئيسية', isActive: activeViewId === 'view-hub', action: () => this.navigate('view-hub') },
+                { id: 'hub-ind', icon: 'fa-wheat-awn', label: 'الورش', isActive: false, action: () => {
+                    this.navigate('view-industry');
+                    window.industryCtrl?.switchTab('workshops');
+                }},
+                { id: 'hub-tombs', icon: 'fa-gem', label: 'المقابر 62', isActive: false, action: () => {
+                    this.navigate('view-industry');
+                    window.industryCtrl?.switchTab('tombs');
+                }},
+                { id: 'hub-sanc', icon: 'fa-dna', label: 'الأنساب 89x', isActive: false, action: () => this.navigate('view-sanctuary') },
+                { id: 'hub-prof', icon: 'fa-vault', label: 'الخزنة', isActive: false, action: () => this.navigate('view-profile') },
             ];
         }
 
-        navbar.innerHTML = buttons.map((b, idx) => `
-            <button class="nav-btn ${idx === 0 ? 'active' : ''}" id="dynamic-${b.id}">
-                <i class="fa-solid ${b.icon}"></i>
-                <span>${b.label}</span>
-            </button>
-        `).join('');
+        navbar.innerHTML = buttons.map((b) => {
+            if (b.isActionCenter) {
+                return `
+                    <button class="nav-btn action-center" id="${b.id}" title="إجراءات سريعة" aria-label="إجراءات سريعة">
+                        <i class="fa-solid ${b.icon}"></i>
+                    </button>
+                `;
+            }
+            return `
+                <button class="nav-btn ${b.isActive ? 'active' : ''}" id="${b.id}">
+                    <i class="fa-solid ${b.icon}"></i>
+                    <span>${b.label}</span>
+                </button>
+            `;
+        }).join('');
 
         buttons.forEach((b) => {
-            const el = document.getElementById(`dynamic-${b.id}`);
+            const el = document.getElementById(b.id);
             el?.addEventListener('click', () => {
                 SoundManager.click();
-                navbar.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-                el.classList.add('active');
+                if (!b.isActionCenter) {
+                    navbar.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                    el.classList.add('active');
+                }
                 b.action();
             });
         });

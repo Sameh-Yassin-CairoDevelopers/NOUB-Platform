@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlayerEmpire } from '../types';
-import { Dna, Factory, FileCheck, Trophy, Landmark } from 'lucide-react';
+import { Dna, Factory, FileCheck, Trophy, Landmark, Crown } from 'lucide-react';
 import { playSound } from '../utils/audio';
 
 interface NavigationProps {
@@ -20,20 +20,28 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const tabs = [
     {
-      id: 'sanctuary' as const,
-      label: 'المحمية والوراثة',
-      englishLabel: 'Sanctuary & DNA',
-      icon: Dna,
-      badge: readyHarvestsCount,
-      badgeColor: 'bg-emerald-500'
-    },
-    {
       id: 'workshops' as const,
-      label: 'مجمع الورش والمصانع',
+      label: 'الورش والصروح',
       englishLabel: 'Workshops & Mills',
       icon: Factory,
       badge: readyCraftsCount,
       badgeColor: 'bg-amber-500'
+    },
+    {
+      id: 'tombs' as const,
+      label: 'مقابر وادي الملوك (62)',
+      englishLabel: 'KV Tombs & Ciphers',
+      icon: Crown,
+      badge: 0,
+      badgeColor: 'bg-yellow-500'
+    },
+    {
+      id: 'sanctuary' as const,
+      label: 'المحمية والأنساب 89x',
+      englishLabel: 'Sanctuary & DNA',
+      icon: Dna,
+      badge: readyHarvestsCount,
+      badgeColor: 'bg-emerald-500'
     },
     {
       id: 'export_board' as const,

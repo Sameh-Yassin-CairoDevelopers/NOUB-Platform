@@ -1,13 +1,12 @@
 /*
- * Project: NOUB SPORTS ECOSYSTEM
+ * Project: DYNASTY TYCOON (سلالات الفراعنة والورش الكبرى)
  * Filename: js/main.js
- * Version: Noub Sports_beta 2.0.0
- * Status: Production Ready
+ * Version: 3.2.0
  */
 
-import { NoubSportsApp } from './core/appClass.js';
+import { DynastyTycoonApp } from './core/appClass.js';
 
 window.addEventListener('DOMContentLoaded', () => {
-    const app = new NoubSportsApp();
+    const app = new DynastyTycoonApp();
     app.boot();
 });

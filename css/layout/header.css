@@ -7,12 +7,12 @@
 
 .app-header {
     position: fixed;
-    top: 15px;
+    top: 12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 92%; 
-    max-width: 900px;
-    height: 60px;
+    width: 96%; 
+    max-width: 1320px;
+    height: 64px;
     z-index: 100;
     background: rgba(26, 28, 35, 0.85);
     backdrop-filter: blur(12px);
@@ -223,3 +223,77 @@
         border-right: 1px solid rgba(255,255,255,0.1);
     }
 }
+
+/* --- WORLD BADGE & GOLD CAPSULE IN HEADER --- */
+.header-gold-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    background: rgba(212, 175, 55, 0.12);
+    padding: 2px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    margin-top: 2px;
+}
+
+.world-badge-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.world-badge-indicator i {
+    color: var(--gold-main);
+    font-size: 0.85rem;
+}
+
+.btn-world-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.08));
+    border: 1px solid var(--gold-main);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: var(--font-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-world-switcher i {
+    color: var(--gold-main);
+    font-size: 0.95rem;
+}
+
+.btn-world-switcher:active {
+    transform: scale(0.95);
+    background: rgba(212, 175, 55, 0.35);
+}
+
+@media (max-width: 600px) {
+    .world-badge-indicator {
+        display: none;
+    }
+    .switcher-label {
+        display: none;
+    }
+    .btn-world-switcher {
+        padding: 8px 10px;
+        border-radius: 50%;
+    }
+}
+

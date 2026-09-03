@@ -11,7 +11,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 900px;
+    max-width: 1320px;
     height: var(--nav-height);
     z-index: 1000;
     display: flex;
@@ -23,7 +23,7 @@
     background: linear-gradient(
         to top, 
         rgba(15, 16, 20, 1) 0%,
-        rgba(26, 28, 35, 0.9) 100%
+        rgba(26, 28, 35, 0.95) 100%
     );
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);

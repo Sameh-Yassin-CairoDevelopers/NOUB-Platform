@@ -5,10 +5,10 @@
  */
 
 .industry-view-wrapper {
-    padding: 16px;
-    max-width: 900px;
+    padding: 20px 24px;
+    max-width: 1320px;
     margin: 0 auto;
-    padding-bottom: 100px;
+    padding-bottom: 120px;
 }
 
 /* WAREHOUSE PILLS */
@@ -16,25 +16,31 @@
     background: #1a1c24;
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: var(--radius-lg);
-    padding: 16px;
+    padding: 20px;
 }
 
 .resources-warehouse-card h4 {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     color: #fff;
-    margin: 0 0 12px 0;
+    margin: 0 0 16px 0;
 }
 
 .resources-pills-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 12px;
 }
 
 @media (min-width: 640px) {
     .resources-pills-row {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .resources-pills-row {
+        grid-template-columns: repeat(6, 1fr);
     }
 }
 
@@ -160,13 +166,302 @@
 .tombs-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
 }
 
 @media (min-width: 640px) {
     .tombs-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+@media (min-width: 1024px) {
+    .tombs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .tombs-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* TOMBS SEARCH & FILTER BAR */
+.tombs-controls-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    background: #14161d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+}
+
+@media (min-width: 768px) {
+    .tombs-controls-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.tombs-search-box {
+    position: relative;
+    flex: 1;
+    max-width: 450px;
+}
+
+.tombs-search-box i {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-main);
+    font-size: 14px;
+}
+
+.tombs-search-input {
+    width: 100%;
+    background: #0d0e12;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 20px;
+    padding: 9px 38px 9px 14px;
+    color: #fff;
+    font-family: var(--font-primary);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.tombs-search-input:focus {
+    border-color: var(--gold-main);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.tombs-filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-chip-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-chip-btn.active, .filter-chip-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: var(--gold-main);
+    color: var(--gold-light);
+}
+
+/* TOMB CIPHER MODAL */
+.cipher-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.cipher-modal-card {
+    background: linear-gradient(165deg, #1d2029 0%, #12131a 100%);
+    border: 1px solid var(--gold-main);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.2);
+    width: 100%;
+    max-width: 480px;
+    padding: 24px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.cipher-modal-close {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.cipher-modal-close:hover {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: rgba(239, 68, 68, 0.6);
+}
+
+.cipher-tomb-header {
+    text-align: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.cipher-kv-pill {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--gold-main);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 900;
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+}
+
+.cipher-tomb-header h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    margin: 4px 0;
+}
+
+.cipher-dynasty {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.cipher-hint-box {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px dashed rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #f3f4f6;
+    line-height: 1.5;
+}
+
+.cipher-hint-box strong {
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.cipher-display-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    background: #0d0e12;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    min-height: 54px;
+}
+
+.cipher-display-digits {
+    font-family: var(--font-orbitron, monospace);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: var(--gold-light);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    min-height: 34px;
+    direction: ltr;
+}
+
+.cipher-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.cipher-key {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-family: var(--font-orbitron, var(--font-primary));
+    font-size: 20px;
+    font-weight: 700;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+}
+
+.cipher-key:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--gold-main);
+    color: var(--gold-light);
+}
+
+.cipher-key:active {
+    transform: scale(0.94);
+}
+
+.cipher-key.key-action {
+    font-size: 15px;
+    font-family: var(--font-primary);
+    color: #f87171;
+}
+
+.cipher-actions-row {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-cipher-unlock {
+    flex: 2;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-main));
+    color: #000;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 12px;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    transition: all 0.2s;
+}
+
+.btn-cipher-unlock:hover {
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-cipher-hint {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e5e7eb;
+    border-radius: var(--radius-md);
+    padding: 12px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cipher-hint:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .tomb-card {
